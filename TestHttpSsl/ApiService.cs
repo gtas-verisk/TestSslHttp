@@ -40,7 +40,7 @@ namespace TestHttpSsl
 		{
 			ApiHttpClient = new HttpClient(new NativeMessageHandler())
 			{
-				BaseAddress = new Uri("https://flightkitapit.iso.com/sync")
+				BaseAddress = new Uri("https://flightkitapi.iso.com/sync")
 			};
 
 			GithubApiHttpClient = new HttpClient(new NativeMessageHandler())
