@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using ModernHttpClient;
 using Refit;
 
 namespace TestHttpSsl
@@ -36,14 +35,14 @@ namespace TestHttpSsl
 			get; set;
 		}
 
-		public ApiService()
+		public ApiService(IMessageHandler messageHandler)
 		{
-			ApiHttpClient = new HttpClient(new NativeMessageHandler())
+			ApiHttpClient = new HttpClient(messageHandler.GetMessageHandler())
 			{
 				BaseAddress = new Uri("https://flightkitapi.iso.com/sync")
 			};
 
-			GithubApiHttpClient = new HttpClient(new NativeMessageHandler())
+			GithubApiHttpClient = new HttpClient(messageHandler.GetMessageHandler())
 			{
 				BaseAddress = new Uri("https://api.github.com")
 			};

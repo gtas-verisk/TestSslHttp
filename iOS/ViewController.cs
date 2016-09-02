@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
 using UIKit;
 
 namespace TestHttpSsl.iOS
@@ -10,12 +12,18 @@ namespace TestHttpSsl.iOS
 
 		public ViewController(IntPtr handle) : base(handle)
 		{
-			ApiService = new ApiService();
+			ApiService = new ApiService(new TouchMessageHandler());
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
+
+			ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, System.Security.Cryptography.X509Certificates.X509Certificate pCertificate, System.Security.Cryptography.X509Certificates.X509Chain pChain, System.Net.Security.SslPolicyErrors pSSLPolicyErrors)
+			{
+				Debug.WriteLine(this.GetType().Name, "Invoked ServerCertificateCallback");
+				return true;
+			};
 
 			// Perform any additional setup after loading the view, typically from a nib.
 			Button.AccessibilityIdentifier = "myButton";
